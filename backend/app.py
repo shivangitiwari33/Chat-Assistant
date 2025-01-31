@@ -60,6 +60,11 @@ def create_database():
     conn.close()
 
 
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to the Backend of Chat Assistant."})
+
+
 @app.route('/query', methods=['POST'])
 def query_database():
     user_query = request.json.get('query', '').lower()
