@@ -1,6 +1,5 @@
 import requests
 
-URL = "http://127.0.0.1:3000/query"
 
 queries = [
     "show me all employees in Sales department",
@@ -17,14 +16,15 @@ queries = [
     "what is the total salary expense for HR department?"
 ]
 
+URL = "https://chat-assistant-dzxd.onrender.com/query"
+
 for query in queries:
     response = requests.post(URL, json={"query": query})
     print(f"Query: {query}")
-    
-    # Check if response is valid
+
     if response.status_code == 200:
         print(f"Response: {response.json()}")
     else:
         print(f"Error: {response.status_code}, Message: {response.text}")
-    
+
     print("-" * 50)
