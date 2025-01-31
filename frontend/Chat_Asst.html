@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
         }
+
         .chat-container {
             width: 50%;
             background: white;
@@ -24,6 +26,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
+
         .chat-box {
             height: 300px;
             overflow-y: auto;
@@ -35,22 +38,26 @@
             display: flex;
             flex-direction: column;
         }
+
         .message {
             padding: 10px;
             margin: 5px 0;
             border-radius: 8px;
             max-width: 80%;
         }
+
         .user {
             align-self: flex-end;
             background: #007bff;
             color: white;
         }
+
         .assistant {
             align-self: flex-start;
             background: #f1f1f1;
             color: #333;
         }
+
         .input-box {
             width: 80%;
             padding: 12px;
@@ -58,6 +65,7 @@
             border-radius: 8px;
             font-size: 16px;
         }
+
         .send-btn {
             padding: 12px 20px;
             border: none;
@@ -69,9 +77,11 @@
             margin-top: 10px;
             transition: background 0.3s;
         }
+
         .send-btn:hover {
             background: #218838;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -80,22 +90,30 @@
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px;
             text-align: left;
         }
+
         th {
             background: #007bff;
             color: white;
         }
+
         tr:nth-child(even) {
             background: #f2f2f2;
         }
     </style>
 </head>
+
 <body>
     <div class="chat-container">
         <h2 style="text-align: center; color: #333;">Chat with Assistant</h2>
@@ -108,27 +126,27 @@
         function sendMessage() {
             const userInput = document.getElementById("userInput").value;
             if (!userInput) return;
-            
+
             const chatBox = document.getElementById("chatBox");
             chatBox.innerHTML += `<p class='message user'><strong>You:</strong> ${userInput}</p>`;
             document.getElementById("userInput").value = "";
-            
-            fetch("http://127.0.0.1:3000/query", {
+
+            fetch("https://chat-assistant-dzxd.onrender.com/query", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ query: userInput })
             })
-            .then(response => response.json())
-            .then(data => {
-                const formattedResponse = formatResponse(data);
-                chatBox.innerHTML += formattedResponse;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            })
-            .catch(error => {
-                chatBox.innerHTML += `<p class='message assistant' style='color:red'><strong>Error:</strong> Unable to connect to server.</p>`;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const formattedResponse = formatResponse(data);
+                    chatBox.innerHTML += formattedResponse;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => {
+                    chatBox.innerHTML += `<p class='message assistant' style='color:red'><strong>Error:</strong> Unable to connect to server.</p>`;
+                });
         }
 
         function formatResponse(data) {
@@ -155,4 +173,5 @@
         }
     </script>
 </body>
+
 </html>
